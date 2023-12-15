@@ -1,0 +1,41 @@
+server:
+  port: 9000
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: service2-1
+          uri: http://localhost:8080
+          predicates:
+            - Path=/service2/
+          filters:
+            - SetPath=/api/v1/transaction/
+        - id: service2-2
+          uri: http://localhost:8080
+          predicates:
+            - Path=/service2/{seg}
+          filters:
+            - SetPath=/api/v1/transaction/{seg}
+        - id: service3-1
+          uri: http://localhost:8081
+          predicates:
+          - Path=/service3/page/{seg}
+          filters:
+          - SetPath=/api/v1/transaction/page/{seg}
+        - id: service3-2
+          uri: http://localhost:8081
+          predicates:
+            - Path=/service3/{seg}
+          filters:
+            - SetPath=/api/v1/transaction/{seg}
+
+
+#server.port=9000
+#spring.cloud.gateway.routes[0].id=service2
+#spring.cloud.gateway.routes[0].uri=http://localhost:8080
+#spring.cloud.gateway.routes[0].predicates[0]=Path=/service2/**
+#spring.cloud.gateway.routes[0].filters[0]=SetPath=/api/v1/transaction
+#spring.cloud.gateway.routes[1].id=service3
+#spring.cloud.gateway.routes[1].uri=http://localhost:8081
+#spring.cloud.gateway.routes[1].predicates[0]=Path=/service3/**
+#spring.cloud.gateway.routes[1].filters[0]=SetPath=/api/v1/transaction
