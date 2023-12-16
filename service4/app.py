@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from elasticsearch import Elasticsearch
+import py_eureka_client.eureka_client as eureka_client
 
 app = Flask(__name__)
 
@@ -8,6 +9,15 @@ password = "CGzGWfG1+2m5l5SSIAGk"
 id="M21qR1Nvd0IxcjRPR1VlMWJNLU86djk2Y0pWWjZSRXVJU2IwTXlKUnlXUQ=="
 host="http://localhost:9200"
 es = Elasticsearch(hosts=host,basic_auth=(username, password))
+
+
+# The flowing code will register your server to eureka server and also start to send heartbeat every 30 seconds
+eureka_client.init(eureka_server="http://localhost:8761/eureka/",
+                   app_name="Service4",
+                   instance_port=5000,
+                   instance_host="127.0.0.1")
+
+
 @app.route('/' , methods=['GET'])
 def c():
     return es.info()
