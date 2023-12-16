@@ -1,14 +1,8 @@
 package com.ahamdah.s2.service;
 
-import com.ahamdah.s2.client.AmountClient;
 import com.ahamdah.s2.model.Transaction;
 import com.ahamdah.s2.repository.TransactionRepository;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import feign.Feign;
-import feign.Target;
-import jakarta.json.JsonObject;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
