@@ -1,15 +1,13 @@
 from flask import Flask, jsonify
 from elasticsearch import Elasticsearch
 
-
-
 app = Flask(__name__)
 
 username = "elastic"
 password = "CGzGWfG1+2m5l5SSIAGk"
 id="M21qR1Nvd0IxcjRPR1VlMWJNLU86djk2Y0pWWjZSRXVJU2IwTXlKUnlXUQ=="
 host="http://localhost:9200"
-es = Elasticsearch(hosts=host,http_auth=(username, password))
+es = Elasticsearch(hosts=host,basic_auth=(username, password))
 @app.route('/' , methods=['GET'])
 def c():
     return es.info()
@@ -31,7 +29,7 @@ def get_max_amount():
         result = es.search(index='transaction', body=query)
         amount_stats = result['aggregations']['amount_stats']
         max_amount = amount_stats['max']
-        
+
         response = {
             "amount": max_amount,
         }
@@ -57,7 +55,7 @@ def get_min_amount():
         result = es.search(index='transaction', body=query)
         amount_stats = result['aggregations']['amount_stats']
         min_amount = amount_stats['min']
-        
+
         response = {
             "amount": min_amount
         }
