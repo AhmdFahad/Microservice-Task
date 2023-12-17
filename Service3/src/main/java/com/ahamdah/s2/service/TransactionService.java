@@ -1,5 +1,6 @@
 package com.ahamdah.s2.service;
 
+import com.ahamdah.s2.client.Service4Client;
 import com.ahamdah.s2.model.Transaction;
 import com.ahamdah.s2.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ import java.util.List;
 public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final RestTemplate restTemplate;
-
+    private final Service4Client service4Client;
     public Page<Transaction> pagableTransaction(int pageNumber, int size){
         Pageable pageable= PageRequest.of(pageNumber,size);
         return transactionRepository.findAll(pageable);
@@ -48,6 +49,6 @@ public class TransactionService {
         return restTemplate.getForObject("http://localhost:5000/transaction/max", String.class);
     }
     public String getMinAmount(){
-        return restTemplate.getForObject("http://localhost:5000/transaction/min", String.class);
+        return service4Client.getMin().getBody();
     }
 }
